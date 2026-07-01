@@ -68,7 +68,7 @@ def studentDetailView(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# # Class based view without mixin
+# # Step 1 Class based view without mixin
 # class Employees(APIView):
 #     def get(self, request):
 #         employees = Employee.objects.all()
@@ -107,9 +107,11 @@ def studentDetailView(request, pk):
 #         employee = self.get_object(pk)
 #         employee.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
+# # End Step 1 Class based view without mixin
 
 
-# Class based view with mixin and generics
+
+# Step 2 Class based view with mixin and generics
 # class Employees(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
 #     queryset = Employee.objects.all()
 #     serializer_class = EmployeeSerializer
@@ -132,9 +134,11 @@ def studentDetailView(request, pk):
 
 #     def delete(self, request, pk):
 #         return self.destroy(request, pk)
+# End Step 2 Class based view with mixin and generics
 
 
-# Class based view with Generics only
+
+# Step 3 Class based view with Generics only
 # class Employees(generics.ListAPIView, generics.CreateAPIView):
 class Employees(generics.ListCreateAPIView):
     queryset = Employee.objects.all()
@@ -146,3 +150,4 @@ class EmployeeDetail(generics.RetrieveUpdateDestroyAPIViewie):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     lookup_field = 'pk'
+# End Step 3 Class based view with Generics only
