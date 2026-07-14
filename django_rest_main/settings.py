@@ -122,3 +122,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+REST_FRAMEWORK = {
+    # Use LimitOffsetPagination for all API responses.
+    #
+    # Example 1:
+    # /blogs/?limit=2&offset=0
+    # Returns: Records 1 and 2
+    #
+    # Example 2:
+    # /blogs/?limit=2&offset=2
+    # Skips the first 2 records and returns Records 3 and 4.
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+
+    # Default number of records returned per request.
+    # Used when the 'limit' parameter is not provided.
+    'PAGE_SIZE': 2,
+}
