@@ -153,36 +153,44 @@ def studentDetailView(request, pk):
 # # End Step 3 Class based view with Generics only
 
 
-# Step 4 use view set with router
-class EmployeeViewSet(viewsets.ViewSet):
-    def list(self, request):
-        queryset = Employee.objects.all()
-        serializer = EmployeeSerializer(queryset, many=True)
-        return Response(serializer.data)
+# # Step 4 use view set with router
+# class EmployeeViewSet(viewsets.ViewSet):
+#     def list(self, request):
+#         queryset = Employee.objects.all()
+#         serializer = EmployeeSerializer(queryset, many=True)
+#         return Response(serializer.data)
 
-    def create(self, request):
-        serializer = EmployeeSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def create(self, request):
+#         serializer = EmployeeSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # Here no need to extra url for primary key related operation, it's handle automatically
-    def retrieve(self, request, pk=None):
-        employee = get_object_or_404(Employee, pk=pk)
-        serializer = EmployeeSerializer(employee)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#     # Here no need to extra url for primary key related operation, it's handle automatically
+#     def retrieve(self, request, pk=None):
+#         employee = get_object_or_404(Employee, pk=pk)
+#         serializer = EmployeeSerializer(employee)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, pk=None):
-        employee = get_object_or_404(Employee, pk=pk)
-        serializer = EmployeeSerializer(employee, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def update(self, request, pk=None):
+#         employee = get_object_or_404(Employee, pk=pk)
+#         serializer = EmployeeSerializer(employee, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk=None):
-        employee = get_object_or_404(Employee, pk=pk)
-        employee.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-# End Step 4 use view set with router
+#     def delete(self, request, pk=None):
+#         employee = get_object_or_404(Employee, pk=pk)
+#         employee.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+# # End Step 4 use view set with router
+
+
+# Step 5 use view set with ModelViewSet
+# These line of code done everything, primary key based or non primary key based all.
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+# End Step 5 use view set with ModelViewSet
