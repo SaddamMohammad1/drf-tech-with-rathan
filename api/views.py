@@ -14,6 +14,7 @@ from rest_framework import mixins, generics, viewsets
 
 from blogs.models import Blog, Comment
 from blogs.serializers import BlogSerializer, CommentSerializer
+from .paginations import CustomPagination
 
 # Create your views here.
 # # Without serializer
@@ -196,6 +197,7 @@ def studentDetailView(request, pk):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    pagination_class = CustomPagination
 # End Step 5 use view set with ModelViewSet
 
 
