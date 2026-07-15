@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     # Third Party Apps
     'rest_framework',
+    'django_filters',
+
+    # Local Apps
     'students',
     'api',
     'employees',
@@ -123,42 +126,45 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# # Use LimitOffsetPagination
-# REST_FRAMEWORK = {
-#     # Use LimitOffsetPagination for all API responses.
-#     #
-#     # Example 1:
-#     # /blogs/?limit=2&offset=0
-#     # Returns: Records 1 and 2
-#     #
-#     # Example 2:
-#     # /blogs/?limit=2&offset=2
-#     # Skips the first 2 records and returns Records 3 and 4.
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+# Use LimitOffsetPagination
+REST_FRAMEWORK = {
+    # Use LimitOffsetPagination for all API responses.
+    #
+    # Example 1:
+    # /blogs/?limit=2&offset=0
+    # Returns: Records 1 and 2
+    #
+    # Example 2:
+    # /blogs/?limit=2&offset=2
+    # Skips the first 2 records and returns Records 3 and 4.
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 
-#     # Default number of records returned per request.
-#     # Used when the 'limit' parameter is not provided.
+    # Default number of records returned per request.
+    # Used when the 'limit' parameter is not provided.
+    'PAGE_SIZE': 2,
+
+    # Add filters
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
+
+# # ==========================================================
+# # Global Pagination: PageNumberPagination
+# #
+# # Applies automatically to DRF Generic Views and ViewSets
+# # that return a list of objects.
+# #
+# # Example:
+# # GET /blogs/?page=1
+# # → Returns records 1 and 2.
+# #
+# # GET /blogs/?page=2
+# # → Returns records 3 and 4.
+# #
+# # PAGE_SIZE:
+# # Each page contains 2 records.
+# # ==========================================================
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 #     'PAGE_SIZE': 2,
 # }
-
-
-# ==========================================================
-# Global Pagination: PageNumberPagination
-#
-# Applies automatically to DRF Generic Views and ViewSets
-# that return a list of objects.
-#
-# Example:
-# GET /blogs/?page=1
-# → Returns records 1 and 2.
-#
-# GET /blogs/?page=2
-# → Returns records 3 and 4.
-#
-# PAGE_SIZE:
-# Each page contains 2 records.
-# ==========================================================
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
-}
