@@ -16,6 +16,8 @@ from blogs.models import Blog, Comment
 from blogs.serializers import BlogSerializer, CommentSerializer
 from .paginations import CustomPagination
 
+from employees.filters import EmployeeFilter
+
 # Create your views here.
 # # Without serializer
 # def studentsView(request):
@@ -199,7 +201,10 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
     pagination_class = CustomPagination
 
-    filterset_fields = ['designation']
+    # filterset_fields = ['designation']
+
+    # EmployeeFilter is also handle case sensitivity
+    filterset_class = EmployeeFilter
 # End Step 5 use view set with ModelViewSet
 
 
